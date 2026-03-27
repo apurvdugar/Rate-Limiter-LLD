@@ -16,7 +16,7 @@ public class SlidingWindowRule implements IRateLimiterStrategy {
     }
 
     @Override
-    public boolean checkRateLimitReached(Request request, LocalDateTime now) {
+    public synchronized boolean checkRateLimitReached(Request request, LocalDateTime now) {
 
         LocalDateTime windowStart = now.minusSeconds(windowSize);
         while (!requestQueue.isEmpty() && requestQueue.peek().isBefore(windowStart)) {
